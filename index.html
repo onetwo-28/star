@@ -3,116 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Star Interaction</title>
+  <title>Interactive Star Project</title>
   <style>
     body {
       margin: 0;
-      overflow: hidden;
       background: black;
+      overflow: hidden;
     }
-    #background {
-      position: fixed;
-      width: 100%;
-      height: 100%;
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
       z-index: -1;
     }
-    .star, .photo, .font {
-      position: absolute;
-      display: none;
-    }
+
     .star {
-      width: 50px;
+      position: absolute;
+      width: 4%;
       cursor: pointer;
       transition: transform 0.3s;
     }
-    .star:hover {
-      transform: scale(1.2);
-    }
-    .photo {
+
+    .photo, .font {
+      position: absolute;
+      top: 50%;
       left: 50%;
-      top: 50%;
       transform: translate(-50%, -50%);
-      width: 40%;
+      max-width: 40%;
       z-index: 10;
+      display: none;
     }
+
     .font {
-      left: 20%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 25%;
+      left: 25%;            /* 글씨는 왼쪽으로 이동 */
+      width: 18%;           /* 크기 조정 */
       z-index: 9;
       opacity: 0;
       animation: fadeIn 1s forwards;
     }
 
     @keyframes fadeIn {
-      from {
+      0% {
         opacity: 0;
-        transform: translateY(-20%);
+        transform: translate(-50%, -60%);
       }
-      to {
+      100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, -50%);
       }
     }
   </style>
 </head>
 <body>
-  <img src="background.jpg" id="background" />
+  <!-- 배경 이미지 -->
+  <img src="background.jpg" class="background" />
 
-  <!-- 별 -->
-  <img src="star1.png" class="star" style="top: 35.76%; left: 7.85%;" id="star1">
-  <img src="star2.png" class="star" style="top: 10.78%; left: 16.07%;" id="star2">
-  <img src="star3.png" class="star" style="top: 23.3%; left: 32%;" id="star3">
-  <img src="star4.png" class="star" style="top: 41.3%; left: 47%;" id="star4">
-  <img src="star5.png" class="star" style="top: 18.7%; left: 58%;" id="star5">
-  <img src="star6.png" class="star" style="top: 39.8%; left: 71.2%;" id="star6">
-  <img src="star7.png" class="star" style="top: 9%; left: 85%;" id="star7">
+  <!-- 별들 -->
+  <img src="star1.png" class="star" id="star1" style="top: 35.76%; left: 7.85%;" />
+  <img src="star2.png" class="star" id="star2" style="top: 10.78%; left: 16.07%;" />
+  <img src="star3.png" class="star" id="star3" style="top: 23.3%; left: 32%;" />
+  <img src="star4.png" class="star" id="star4" style="top: 41.5%; left: 47%;" />
+  <img src="star5.png" class="star" id="star5" style="top: 17%; left: 58%;" />
+  <img src="star6.png" class="star" id="star6" style="top: 39%; left: 71.5%;" />
+  <img src="star7.png" class="star" id="star7" style="top: 9%; left: 85%;" />
 
-  <!-- 사진 -->
-  <img src="photo1.png" class="photo" id="photo1">
-  <img src="photo2.png" class="photo" id="photo2">
-  <img src="photo3.png" class="photo" id="photo3">
-  <img src="photo4.png" class="photo" id="photo4">
-  <img src="photo5.png" class="photo" id="photo5">
-  <img src="photo6.png" class="photo" id="photo6">
-  <img src="photo7.png" class="photo" id="photo7">
+  <!-- 사진들 -->
+  <img src="photo1.png" class="photo" id="photo1" />
+  <img src="photo2.png" class="photo" id="photo2" />
+  <img src="photo3.png" class="photo" id="photo3" />
+  <img src="photo4.png" class="photo" id="photo4" />
+  <img src="photo5.png" class="photo" id="photo5" />
+  <img src="photo6.png" class="photo" id="photo6" />
+  <img src="photo7.png" class="photo" id="photo7" />
 
-  <!-- 글씨 -->
-  <img src="font1.png" class="font" id="font1">
-  <img src="font2.png" class="font" id="font2">
-  <img src="font3.png" class="font" id="font3">
-  <img src="font4.png" class="font" id="font4">
-  <img src="font5.png" class="font" id="font5">
-  <img src="font6.png" class="font" id="font6">
+  <!-- 글씨 PNG들 -->
+  <img src="font1.png" class="font" id="font1" />
+  <img src="font2.png" class="font" id="font2" />
+  <img src="font3.png" class="font" id="font3" />
+  <img src="font4.png" class="font" id="font4" />
+  <img src="font5.png" class="font" id="font5" />
+  <img src="font6.png" class="font" id="font6" />
 
   <script>
-    const stars = document.querySelectorAll('.star');
+    const stars = document.querySelectorAll(".star");
+    const photos = [
+      "photo1", "photo2", "photo3", "photo4", "photo5", "photo6", "photo7"
+    ];
+    const fonts = [
+      "font1", "font2", "font3", "font4", "font5", "font6"
+    ];
 
     stars.forEach((star, index) => {
-      star.style.display = 'block';
-      star.addEventListener('click', () => {
-        const photoId = `photo${index + 1}`;
-        const fontId = `font${index + 1}`;
+      star.addEventListener("click", () => {
+        const photoId = photos[index];
+        const fontId = fonts[index]; // font6까지만 있음
 
         const photo = document.getElementById(photoId);
         const font = document.getElementById(fontId);
 
         if (photo) {
-          photo.style.display = 'block';
-          setTimeout(() => {
-            photo.style.display = 'none';
-          }, 5000);
+          photo.style.display = "block";
         }
 
         if (font) {
-          font.style.display = 'block';
-          font.style.animation = 'fadeIn 1s forwards';
-          setTimeout(() => {
-            font.style.display = 'none';
-          }, 5000);
+          font.style.display = "block";
+          font.style.animation = "fadeIn 1s forwards";
         }
+
+        setTimeout(() => {
+          if (photo) photo.style.display = "none";
+          if (font) font.style.display = "none";
+        }, 5000); // 5초 후 사라짐
       });
     });
   </script>
