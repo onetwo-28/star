@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Interactive Stars</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
+
+    #background {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 4%;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .photo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40%;
+      transform: translate(-50%, -50%);
+      display: none;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌌 배경 -->
+  <img id="background" src="background.jpg" alt="background" />
+
+  <!-- ⭐ 별들 (위치 조정 완료) -->
+  <img src="star1.png" class="star" style="top: 35.76%; left: 7.85%;" id="star1">
+  <img src="star2.png" class="star" style="top: 10.78%; left: 16.57%;" id="star2">
+  <img src="star3.png" class="star" style="top: 24.31%; left: 32.46%;" id="star3">
+  <img src="star4.png" class="star" style="top: 43.46%; left: 46.54%;" id="star4">
+  <img src="star5.png" class="star" style="top: 16.36%; left: 57.08%;" id="star5">
+  <img src="star6.png" class="star" style="top: 39.64%; left: 71.54%;" id="star6">
+  <img src="star7.png" class="star" style="top: 6.72%; left: 84.08%;" id="star7">
+
+  <!-- 🖼️ 사진 이미지들 -->
+  <img src="photo1.png" class="photo" id="photo1">
+  <img src="photo2.png" class="photo" id="photo2">
+  <img src="photo3.png" class="photo" id="photo3">
+  <img src="photo4.png" class="photo" id="photo4">
+  <img src="photo5.png" class="photo" id="photo5">
+  <img src="photo6.png" class="photo" id="photo6">
+  <img src="photo7.png" class="photo" id="photo7">
+
+  <script>
+    for (let i = 1; i <= 7; i++) {
+      const star = document.getElementById(`star${i}`);
+      const photo = document.getElementById(`photo${i}`);
+
+      star.addEventListener('click', () => {
+        document.querySelectorAll('.photo').forEach(p => p.style.display = 'none');
+        photo.style.display = 'block';
+
+        setTimeout(() => {
+          photo.style.display = 'none';
+        }, 5000);
+      });
+    }
+  </script>
+</body>
+</html>
