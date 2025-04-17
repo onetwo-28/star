@@ -2,76 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Interactive Stars</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Star Interaction</title>
   <style>
     body {
       margin: 0;
       overflow: hidden;
       background: black;
     }
-
     #background {
-      position: absolute;
-      width: 100vw;
-      height: 100vh;
+      position: fixed;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      z-index: 0;
+      z-index: -1;
     }
-
+    .star, .photo, .font {
+      position: absolute;
+      display: none;
+    }
     .star {
-      position: absolute;
-      width: 4%;
+      width: 50px;
       cursor: pointer;
-      z-index: 1;
+      transition: transform 0.3s;
     }
-
+    .star:hover {
+      transform: scale(1.2);
+    }
     .photo {
-      position: absolute;
-      top: 50%;
       left: 50%;
+      top: 50%;
       transform: translate(-50%, -50%);
       width: 40%;
-      display: none;
-      z-index: 2;
+      z-index: 10;
     }
-
     .font {
-      position: absolute;
+      left: 20%;
       top: 50%;
-      left: 25%;
       transform: translate(-50%, -50%);
-      width: 30%;
-      display: none;
-      z-index: 2;
+      width: 25%;
+      z-index: 9;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
     }
 
-    @keyframes fadeSlideIn {
-      0% {
+    @keyframes fadeIn {
+      from {
         opacity: 0;
-        transform: translate(-50%, -60%);
+        transform: translateY(-20%);
       }
-      100% {
+      to {
         opacity: 1;
-        transform: translate(-50%, -50%);
+        transform: translateY(0);
       }
     }
   </style>
 </head>
 <body>
+  <img src="background.jpg" id="background" />
 
-  <!-- 🌌 배경 -->
-  <img id="background" src="background.jpg" alt="background" />
-
-  <!-- ⭐ 별들 -->
+  <!-- 별 -->
   <img src="star1.png" class="star" style="top: 35.76%; left: 7.85%;" id="star1">
-  <img src="star2.png" class="star" style="top: 10.78%; left: 16.57%;" id="star2">
-  <img src="star3.png" class="star" style="top: 24.31%; left: 32.46%;" id="star3">
-  <img src="star4.png" class="star" style="top: 43.46%; left: 46.54%;" id="star4">
-  <img src="star5.png" class="star" style="top: 16.36%; left: 57.08%;" id="star5">
-  <img src="star6.png" class="star" style="top: 39.64%; left: 71.54%;" id="star6">
-  <img src="star7.png" class="star" style="top: 6.72%; left: 84.08%;" id="star7">
+  <img src="star2.png" class="star" style="top: 10.78%; left: 16.07%;" id="star2">
+  <img src="star3.png" class="star" style="top: 23.3%; left: 32%;" id="star3">
+  <img src="star4.png" class="star" style="top: 41.3%; left: 47%;" id="star4">
+  <img src="star5.png" class="star" style="top: 18.7%; left: 58%;" id="star5">
+  <img src="star6.png" class="star" style="top: 39.8%; left: 71.2%;" id="star6">
+  <img src="star7.png" class="star" style="top: 9%; left: 85%;" id="star7">
 
-  <!-- 🖼️ 사진 이미지들 -->
+  <!-- 사진 -->
   <img src="photo1.png" class="photo" id="photo1">
   <img src="photo2.png" class="photo" id="photo2">
   <img src="photo3.png" class="photo" id="photo3">
@@ -80,7 +79,7 @@
   <img src="photo6.png" class="photo" id="photo6">
   <img src="photo7.png" class="photo" id="photo7">
 
-  <!-- 📝 글씨 이미지들 -->
+  <!-- 글씨 -->
   <img src="font1.png" class="font" id="font1">
   <img src="font2.png" class="font" id="font2">
   <img src="font3.png" class="font" id="font3">
@@ -89,33 +88,33 @@
   <img src="font6.png" class="font" id="font6">
 
   <script>
-    function showPair(photoId, fontId) {
-      const photo = document.getElementById(photoId);
-      const font = fontId ? document.getElementById(fontId) : null;
+    const stars = document.querySelectorAll('.star');
 
-      photo.style.display = "block";
+    stars.forEach((star, index) => {
+      star.style.display = 'block';
+      star.addEventListener('click', () => {
+        const photoId = `photo${index + 1}`;
+        const fontId = `font${index + 1}`;
 
-      if (font) {
-        font.style.display = "block";
-        font.style.animation = "none"; // 애니메이션 초기화
-        void font.offsetWidth;         // 리플로우로 강제 재적용
-        font.style.animation = "fadeSlideIn 0.8s ease forwards";
-      }
+        const photo = document.getElementById(photoId);
+        const font = document.getElementById(fontId);
 
-      setTimeout(() => {
-        photo.style.display = "none";
-        if (font) font.style.display = "none";
-      }, 5000);
-    }
+        if (photo) {
+          photo.style.display = 'block';
+          setTimeout(() => {
+            photo.style.display = 'none';
+          }, 5000);
+        }
 
-    document.getElementById("star1").addEventListener("click", () => showPair("photo1", "font1"));
-    document.getElementById("star2").addEventListener("click", () => showPair("photo2", "font2"));
-    document.getElementById("star3").addEventListener("click", () => showPair("photo3", "font3"));
-    document.getElementById("star4").addEventListener("click", () => showPair("photo4", "font4"));
-    document.getElementById("star5").addEventListener("click", () => showPair("photo5", "font5"));
-    document.getElementById("star6").addEventListener("click", () => showPair("photo6", "font6"));
-    document.getElementById("star7").addEventListener("click", () => showPair("photo7", null));
+        if (font) {
+          font.style.display = 'block';
+          font.style.animation = 'fadeIn 1s forwards';
+          setTimeout(() => {
+            font.style.display = 'none';
+          }, 5000);
+        }
+      });
+    });
   </script>
 </body>
 </html>
-
