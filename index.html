@@ -33,14 +33,18 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      max-width: 40%;
       z-index: 10;
       display: none;
     }
 
+    .photo {
+      max-width: 40%;
+    }
+
     .font {
-      left: 25%;            /* 글씨는 왼쪽으로 이동 */
-      width: 18%;           /* 크기 조정 */
+      left: 25%;            /* 왼쪽 중앙 위치 */
+      width: 12%;           /* ✅ 글씨 크기 줄임 */
+      max-height: 30%;      /* ✅ 너무 긴 글씨 방지 */
       z-index: 9;
       opacity: 0;
       animation: fadeIn 1s forwards;
@@ -59,7 +63,7 @@
   </style>
 </head>
 <body>
-  <!-- 배경 이미지 -->
+  <!-- 배경 -->
   <img src="background.jpg" class="background" />
 
   <!-- 별들 -->
@@ -71,7 +75,7 @@
   <img src="star6.png" class="star" id="star6" style="top: 39%; left: 71.5%;" />
   <img src="star7.png" class="star" id="star7" style="top: 9%; left: 85%;" />
 
-  <!-- 사진들 -->
+  <!-- 사진 -->
   <img src="photo1.png" class="photo" id="photo1" />
   <img src="photo2.png" class="photo" id="photo2" />
   <img src="photo3.png" class="photo" id="photo3" />
@@ -80,7 +84,7 @@
   <img src="photo6.png" class="photo" id="photo6" />
   <img src="photo7.png" class="photo" id="photo7" />
 
-  <!-- 글씨 PNG들 -->
+  <!-- 글씨 PNG -->
   <img src="font1.png" class="font" id="font1" />
   <img src="font2.png" class="font" id="font2" />
   <img src="font3.png" class="font" id="font3" />
@@ -100,7 +104,7 @@
     stars.forEach((star, index) => {
       star.addEventListener("click", () => {
         const photoId = photos[index];
-        const fontId = fonts[index]; // font6까지만 있음
+        const fontId = fonts[index]; // 7번은 없음
 
         const photo = document.getElementById(photoId);
         const font = document.getElementById(fontId);
@@ -117,7 +121,7 @@
         setTimeout(() => {
           if (photo) photo.style.display = "none";
           if (font) font.style.display = "none";
-        }, 5000); // 5초 후 사라짐
+        }, 5000);
       });
     });
   </script>
